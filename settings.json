@@ -1,0 +1,19 @@
+{
+    "time_interval":100,
+    "ips_path":"./ips.csv",
+    "point_of_ip":2,
+    "power":{
+        "computer":75,
+        "not_computer":200
+    },
+    "mode":[
+        {
+            "ping":"ping {} -n 1 > tmp.txt",
+            "key_word":"bytes=32"
+        },
+        {
+            "ping":"ping {} -c 1 > tmp.txt",
+            "key_word":""
+        }
+    ]
+}

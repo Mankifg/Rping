@@ -2,23 +2,29 @@ from flask import Flask,render_template,url_for,request,redirect, make_response
 from flask_apscheduler import APScheduler
 import datetime
 import random
-from ping import fromiplisttoonlinecomputers
+import functions
 
 app = Flask(__name__)
 
 def update_n():
-    number = fromiplisttoonlinecomputers()
+    number, specific_list = functions.fromiplisttoonlinecomputers()
+    get_power = functions.get_power(specific_list)
+
+    r = f"{number}\n{get_power}"
     with open("save.txt","w") as f:
-        f.write(str(number))
+        f.write(r)
 
 number = 0
-@app.route('/', methods=["GET", "POST"])
+@app.route('/')
 def main():
     with open("save.txt","r") as f:
-        number = f.read()
-
-    print(number)
-    return render_template('index.html',number = number)
+        data = f.read()
+    print(f"{data}")
+    p_pc = data[0]
+    p_table = data[1]
+    vse_naprave = 0
+    p = 0
+    return render_template('index.html',p_pc = p_pc,p_table = p_table,naprave = vse_naprave,power = p)
 
 
 if (__name__ == "__main__"):
