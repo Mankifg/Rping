@@ -65,7 +65,7 @@ def fromiplisttoonlinecomputers():
             specific.append(0)
             print(f"[-] {ip}")
 
-    return alive, specific
+    return specific
 
 
 def get_power(specific_list):
@@ -85,7 +85,17 @@ def get_power(specific_list):
     return p
 
 def get_table(specific_list):
-    return specific_list.count(0)
+    c = 0
+    for a,b in zip(is_computer,specific_list):
+        if int(a) == 0 and int(b) == 1:
+            c = c+1
+
+    return c
 
 def get_racunalniki(specific_list):
-    return specific_list.count(1)
+    c = 0
+    for a,b in zip(is_computer,specific_list):
+        if int(a) == 1 and int(b) == 1:
+            c = c+1
+
+    return c

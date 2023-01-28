@@ -5,22 +5,25 @@ import random
 import functions
 
 app = Flask(__name__)
-
 def update_n():
+    r = ''
     specific_list = functions.fromiplisttoonlinecomputers()
     racunalniki = functions.get_racunalniki(specific_list)
     table = functions.get_table(specific_list)
     get_power = functions.get_power(specific_list)
-    naprave = functions.naprave(specific_list)
+    naprave = functions.naprave()
     r = f"{racunalniki}-{table}-{get_power}-{naprave}"
+    print(f"Write to file {r}")
     with open("save.txt","w") as f:
         f.write(r)
+    
 
 number = 0
 @app.route('/')
 def main():
     with open("save.txt","r") as f:
         data = f.read()
+    print(data)
     data = data.split("-")
     p_pc = data[0]
     p_table = data[1]
