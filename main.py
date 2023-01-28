@@ -11,7 +11,7 @@ def update_n():
     racunalniki = functions.get_racunalniki(specific_list)
     table = functions.get_table(specific_list)
     get_power = functions.get_power(specific_list)
-    naprave = functions.get_naprave(specific_list)
+    naprave = functions.naprave(specific_list)
     r = f"{racunalniki}-{table}-{get_power}-{naprave}"
     with open("save.txt","w") as f:
         f.write(r)
