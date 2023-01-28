@@ -43,6 +43,8 @@ for i in range(len(raw)):
     is_computer.append(raw[i][n_of_ip +1])
 
 
+def naprave():
+    return len(ips)
 
 def fromiplisttoonlinecomputers():
     specific = []
@@ -63,8 +65,6 @@ def fromiplisttoonlinecomputers():
             specific.append(0)
             print(f"[-] {ip}")
 
-    
-
     return alive, specific
 
 
@@ -82,5 +82,10 @@ def get_power(specific_list):
             else:
                 p = p + not_computer
 
-    
     return p
+
+def get_table(specific_list):
+    return specific_list.count(0)
+
+def get_racunalniki(specific_list):
+    return specific_list.count(1)
