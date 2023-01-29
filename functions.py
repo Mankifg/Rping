@@ -103,6 +103,8 @@ def get_prizgane(specific_list):
 
 def get_ip():
     if mode == "linux":
-        return os.system("hostname -I")
+        from dotenv import load_dotenv
+        load_dotenv()
+        return os.getenv('ip')
     else:
         return "0.0.0.0"
