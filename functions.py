@@ -1,4 +1,4 @@
-import time
+import datetime
 import os
 import csv
 import json
@@ -13,6 +13,8 @@ with open('settings.json') as f:
 
 file_name = data["ips_path"]
 n_of_ip = data["point_of_ip"]
+file_out = data["file_out"]
+
 
 computer = data["power"]["computer"]
 not_computer = data["power"]["not_computer"]
@@ -32,17 +34,27 @@ else:
 ips = []
 is_computer = []
 
-def read_csv_file():
-    with open(file_name, encoding='utf-8', newline='') as file:
+def read_csv_file(fdir):
+    with open(fdir, encoding='utf-8', newline='') as file:
         return list(csv.reader(file))
 
-raw = read_csv_file()
+def write_to_csv_file(fdir,rows):
+    with open(fdir, 'a', encoding='utf-8', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(rows) 
+ 
+
+
+raw = read_csv_file(file_name)
 
 for i in range(len(raw)):
     ips.append(raw[i][n_of_ip])
     is_computer.append(int(raw[i][n_of_ip +1]))
 
+out = read_csv_file(file_out)
 
+if out == []:
+    write_to_csv_file(file_out,["Dan","Ura","Moč","Prizgani_rac","Przigane_table","Vsi_rac","Vse_table"])
 
 def fromiplisttoonlinecomputers():
     specific = []
@@ -108,3 +120,12 @@ def get_ip():
         return os.getenv('ip')
     else:
         return "0.0.0.0"
+
+def save(power,p_pc,p_table,all_pc,all_table):
+    # ["Dan","Ura","Moč","Prizgani_rac","Przigane_table","Vsi_rac","Vse_table"]
+    dan = datetime.datetime.now().strftime("%Y-%m-%d")
+    hour = datetime.datetime.now().strftime("%H-%M")
+    data = [dan,hour,power,p_pc,p_table,all_pc,all_table]
+    print(data)
+    write_to_csv_file(file_out,data)
+      

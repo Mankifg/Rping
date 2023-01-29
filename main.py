@@ -14,6 +14,7 @@ def update_n():
     vsi_racunalniki, vse_table = functions.get_all()
     print(vsi_racunalniki, vse_table)
     r = f"{power}-{prizgani_racunalniki}-{prizgane_table}-{vsi_racunalniki}-{vse_table}"
+    functions.save(power,prizgani_racunalniki,prizgane_table,vsi_racunalniki,vse_table)
 
     with open("save.txt","w") as f:
         f.write(r)
