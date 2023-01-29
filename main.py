@@ -36,8 +36,9 @@ def main():
 
 
 if (__name__ == "__main__"):
+    ip = functions.get_ip()
     scheduler = APScheduler()
     scheduler.add_job(func=update_n, trigger='interval', id='job', seconds=10)
     scheduler.start()
-    app.run(host="0.0.0.0", port=80, debug=False)
+    app.run(host=ip, port=80, debug=False)
 

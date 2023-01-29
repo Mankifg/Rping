@@ -99,5 +99,10 @@ def get_prizgane(specific_list):
             else:
                 table = table + 1
 
-
     return pc, table
+
+def get_ip():
+    if mode == "linux":
+        return os.system("hostname -I")
+    else:
+        return "0.0.0.0"
