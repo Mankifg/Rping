@@ -6,7 +6,6 @@ import functions
 
 app = Flask(__name__)
 def update_n():
-    r = ''
     specific_list = functions.fromiplisttoonlinecomputers()
     racunalniki = functions.get_racunalniki(specific_list)
     table = functions.get_table(specific_list)
@@ -23,12 +22,11 @@ number = 0
 def main():
     with open("save.txt","r") as f:
         data = f.read()
-    print(data)
     data = data.split("-")
     p_pc = data[0]
     p_table = data[1]
-    vse_naprave = data[3]
-    p = data[2]
+    vse_naprave = 0
+    p = 0
     return render_template('index.html',p_pc = p_pc,p_table = p_table,naprave = vse_naprave,power = p)
 
 
@@ -36,5 +34,5 @@ if (__name__ == "__main__"):
     scheduler = APScheduler()
     scheduler.add_job(func=update_n, trigger='interval', id='job', seconds=10)
     scheduler.start()
-    app.run(host="0.0.0.0", port=80, debug=True)
+    app.run(host="0.0.0.0", port=80, debug=False)
 
