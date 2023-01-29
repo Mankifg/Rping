@@ -2,7 +2,7 @@ import time
 import os
 import csv
 import json
-
+os.system("cls")
 mode = ""
 
 import platform
@@ -40,7 +40,7 @@ raw = read_csv_file()
 
 for i in range(len(raw)):
     ips.append(raw[i][n_of_ip])
-    is_computer.append(raw[i][n_of_ip +1])
+    is_computer.append(int(raw[i][n_of_ip +1]))
 
 
 
@@ -63,9 +63,12 @@ def fromiplisttoonlinecomputers():
             specific.append(0)
             print(f"[-] {ip}")
 
-    
 
-    return alive, specific
+    return specific
+
+def get_all():
+    print(is_computer)
+    return is_computer.count(1),is_computer.count(0)
 
 
 def get_power(specific_list):
@@ -81,22 +84,20 @@ def get_power(specific_list):
                 p = p + computer
             else:
                 p = p + not_computer
-
-    
     return p
 
-def get_table(specific_list):
-    c = 0
-    for a,b in zip(is_computer,specific_list):
-        if int(a) == 0 and int(b) == 1:
-            c = c+1
 
-    return c
 
-def get_racunalniki(specific_list):
-    c = 0
-    for a,b in zip(is_computer,specific_list):
-        if int(a) == 1 and int(b) == 1:
-            c = c+1
+def get_prizgane(specific_list):
+    pc = 0
+    table = 0
 
-    return c
+    for a,b in zip(specific_list,is_computer):
+        if int(a) == 1:  # prizgano
+            if int(b) == 1:  # computer
+                pc = pc + 1
+            else:
+                table = table + 1
+
+
+    return pc, table
