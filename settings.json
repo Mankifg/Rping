@@ -14,7 +14,7 @@
         },
         {
             "ping":"ping {} -c 1 > tmp.txt",
-            "key_word":""
+            "key_word":"1 received"
         }
     ]
 }
