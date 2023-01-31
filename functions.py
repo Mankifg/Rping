@@ -90,7 +90,7 @@ def get_power(specific_list):
         print("[ERROR] List size does not match ip number. Exiting")
         exit()
 
-    for a,b in zip(is_computer,specific_list):
+    for a,b in zip(specific_list,is_computer):
         if int(a) == 1: # prizgan
             if int(b) == 1: # computer
                 p = p + computer
@@ -115,9 +115,7 @@ def get_prizgane(specific_list):
 
 def get_ip():
     if mode == "linux":
-        from dotenv import load_dotenv
-        load_dotenv()
-        return os.getenv('ip')
+        return "127.0.0.1"
     else:
         return "0.0.0.0"
 
