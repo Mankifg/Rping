@@ -1,7 +1,7 @@
 {
     "time_interval":100,
-    "ips_path":"./ips.csv",
-    "file_out":"./out.csv",
+    "ips_path":"data/ips.csv",
+    "file_out":"data/out.csv",
     "point_of_ip":2,
     "power":{
         "computer":75,
