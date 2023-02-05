@@ -1,10 +1,16 @@
-from flask import Flask,render_template
+from flask import Flask, render_template
 from flask_apscheduler import APScheduler
 import datetime
-import random
 import functions
+import json
 
 app = Flask(__name__)
+
+with open('settings.json') as f:
+    data = json.load(f)
+
+time_sleep = data["time_interval"]
+
 def update_n():
     specific_list = functions.fromiplisttoonlinecomputers()
     power = functions.get_power(specific_list)
@@ -14,16 +20,19 @@ def update_n():
     vsi_racunalniki, vse_table = functions.get_all()
     print(vsi_racunalniki, vse_table)
     r = f"{power}-{prizgani_racunalniki}-{prizgane_table}-{vsi_racunalniki}-{vse_table}"
-    functions.save(power,prizgani_racunalniki,prizgane_table,vsi_racunalniki,vse_table)
+    functions.save(
+        power, prizgani_racunalniki, prizgane_table, vsi_racunalniki, vse_table
+    )
 
-    with open("save.txt","w") as f:
+    with open("save.txt", "w") as f:
         f.write(r)
-    
 
-number = 0
-@app.route('/')
+    functions.checkfordaily()
+
+
+@app.route("/")
 def main():
-    with open("save.txt","r") as f:
+    with open("save.txt", "r") as f:
         data = f.read()
     data = data.split("-")
     p_pc = data[1]
@@ -33,13 +42,19 @@ def main():
     power = data[0]
     all_napreve = int(all_pc) + int(all_table)
     p_naprave = int(p_pc) + int(p_table)
-    return render_template('index.html',p_pc=p_pc,all_pc=all_pc,p_table=p_table,all_table=all_table,p_all=p_naprave,all_naprave=all_napreve,power=power)
+    return render_template(
+        "index.html",
+        p_pc=p_pc,
+        all_pc=all_pc,
+        p_table=p_table,
+        all_table=all_table,
+        p_all=p_naprave,
+        all_naprave=all_napreve,
+        power=power,
+    )
 
-
-if (__name__ == "__main__"):
-    ip = functions.get_ip()
+if __name__ == "__main__":
     scheduler = APScheduler()
-    scheduler.add_job(func=update_n, trigger='interval', id='job', seconds=10)
+    scheduler.add_job(func=update_n, trigger="interval", id="job", seconds=time_sleep)
     scheduler.start()
-    app.run(host=ip, port=80, debug=False)
-
+    app.run(host=functions.ip(), port=80, debug=False)
