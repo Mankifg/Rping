@@ -73,7 +73,7 @@ if out == []:
     )
 
 if daily == []:
-    write_to_csv_file(daily_path, ["Dan", "Moč"])
+    write_to_csv_file(daily_path, ["Dan","Čas","Moč"])
 
 
 def fromiplisttoonlinecomputers():
@@ -198,11 +198,11 @@ def calculate_power(day):
 
 # Todo
 def checkfordaily():
-    time = datetime.now().strftime("%H:%M")
+    time = datetime.now().strftime("%H:%M:%S")
     dan = datetime.now().strftime("%Y-%m-%d")
 
     #! if (time == finish_time):
     if True:
         pp = calculate_power(dan)
-        print(pp)
-        write_to_csv_file(daily_path, [dan, pp])
+        pp = round(pp,5)
+        write_to_csv_file(daily_path, [dan,time,pp])
