@@ -36,6 +36,10 @@ else:
 ips = []
 is_computer = []
 
+with open("./save.txt","w") as f:
+    f.write("-1|-1|-1|-1|-1")
+with open("./tmp.txt","w") as f:
+    pass
 
 def read_csv_file(fdir):
     with open(fdir, encoding="utf-8", newline="") as file:
@@ -153,15 +157,15 @@ def save(power, p_pc, p_table, all_pc, all_table):
 
     last = last + 1
 
-    dan = datetime.now().strftime("%Y-%m-%d")
-    hour = datetime.now().strftime("%H-%M-%S")
+    dan = datetime.now().strftime("%d. %m. %Y")
+    hour = datetime.now().strftime("%S:%M:%H")
     data = [last, dan, hour, power, p_pc, p_table, all_pc, all_table]
     print(data)
     write_to_csv_file(file_out, data)
 
 
 def fromhour_to_seconds(t):
-    t = t.split("-")
+    t = t.split(". ")
     t1 = int(t[0]) * 60 * 60 + int(t[1]) * 60 + int(t[2])
     return t1
 
@@ -198,8 +202,8 @@ def calculate_power(day):
 
 # Todo
 def checkfordaily():
-    time = datetime.now().strftime("%H:%M:%S")
-    dan = datetime.now().strftime("%Y-%m-%d")
+    dan = datetime.now().strftime("%d. %m. %Y")
+    time = datetime.now().strftime("%S:%M:%H")
 
     #! if (time == finish_time):
     if True:
