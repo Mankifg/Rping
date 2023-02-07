@@ -165,7 +165,7 @@ def save(power, p_pc, p_table, all_pc, all_table):
 
 
 def fromhour_to_seconds(t):
-    t = t.split(".")
+    t = t.split(":")
     t1 = int(t[0]) * 60 * 60 + int(t[1]) * 60 + int(t[2])
     return t1
 
