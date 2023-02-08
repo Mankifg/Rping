@@ -154,8 +154,8 @@ def save(power, p_pc, p_table, all_pc, all_table):
 
     last = last + 1
 
-    dan = datetime.now().strftime("%Y-%m-%d")
-    hour = datetime.now().strftime("%H-%M-%S")
+    dan = datetime.now().strftime("%Y.%m.%d")
+    hour = datetime.now().strftime("%H:%M:%S")
     data = [last, dan, hour, power, p_pc, p_table, all_pc, all_table]
     print(data)
     write_to_csv_file(file_out, data)

@@ -1,5 +1,5 @@
 {
-    "time_interval":100,
+    "time_interval":10,
     "ips_path":"data/ips.csv",
     "file_out":"data/out.csv",
     "file_day":"data/daily.csv",
