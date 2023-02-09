@@ -3,6 +3,7 @@ from flask_apscheduler import APScheduler
 import datetime
 import functions
 import json
+import function2
 
 app = Flask(__name__)
 

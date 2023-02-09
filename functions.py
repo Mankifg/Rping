@@ -3,6 +3,7 @@ import os
 import csv
 import json
 import platform
+import function2
 
 mode = ""
 operating_system = platform.system()
@@ -35,6 +36,7 @@ else:
 
 ips = []
 is_computer = []
+place = []
 
 with open("./save.txt","w") as f:
     f.write("-1|-1|-1|-1|-1")
@@ -55,6 +57,7 @@ def write_to_csv_file(fdir, rows):
 raw = read_csv_file(file_name)
 
 for i in range(len(raw)):
+    place.append(raw[i][n_of_ip-1])
     ips.append(raw[i][n_of_ip])
     is_computer.append(int(raw[i][n_of_ip + 1]))
 
@@ -85,18 +88,24 @@ def fromiplisttoonlinecomputers():
     alive = 0
     dead = 0
     for i, ip in enumerate(ips):
-        os.system(ping_cmd.format(ip))
+        try:
 
-        with open("tmp.txt", "r") as f:
-            ret = f.read()
+            os.system(ping_cmd.format(ip))
 
-        if key_word in ret:
-            alive = alive + 1
-            specific.append(1)
-            print(f"[+] {ip}")
-        else:
-            specific.append(0)
-            print(f"[-] {ip}")
+            with open("tmp.txt", "r") as f:
+                ret = f.read()
+
+            pl = place[ips.index(ip)]
+            if key_word in ret:
+                alive = alive + 1
+                specific.append(1)
+                print(f"[+] {ip} - {pl}")
+            else:
+                specific.append(0)
+                print(f"[-] {ip} - {pl}")
+        except KeyboardInterrupt:
+            print("keyboard")
+            exit()
 
     return specific
 
@@ -162,6 +171,7 @@ def save(power, p_pc, p_table, all_pc, all_table):
     data = [last, dan, hour, power, p_pc, p_table, all_pc, all_table]
     print(data)
     write_to_csv_file(file_out, data)
+    function2.update(data)
 
 
 def fromhour_to_seconds(t):
