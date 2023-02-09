@@ -2,9 +2,14 @@ from oauth2client.service_account import ServiceAccountCredentials
 import gspread
 import json
 import string
+import csv
+
+def read_csv_file(fdir):
+    with open(fdir, encoding="utf-8", newline="") as file:
+        return list(csv.reader(file))
 
 alhabet = string.ascii_lowercase
-
+file_out = "./data/out.csv"
 
 scopes = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -21,11 +26,24 @@ sheet = file.open("sheet1")  # open sheet
 sheet = sheet.sheet1
 
 def update(inp):
-    all_cells = sheet.range("A1:D10")
-    n = 1
+
+    last = read_csv_file(file_out)
+    last = last[-1][0]
+    print(last)
+
+    try:
+        last = int(last)
+    except ValueError:
+        last = 0
+
+    last = last + 1
+
+    n = last - 2
+
+    if n < 1:
+        n = 1
     while True:
         v = sheet.acell(f"A{n}").value
-        print(v)
         if v == None:
             print(n)
             break

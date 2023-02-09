@@ -36,7 +36,7 @@ else:
 
 ips = []
 is_computer = []
-
+place = []
 
 def read_csv_file(fdir):
     with open(fdir, encoding="utf-8", newline="") as file:
@@ -52,6 +52,7 @@ def write_to_csv_file(fdir, rows):
 raw = read_csv_file(file_name)
 
 for i in range(len(raw)):
+    place.append(raw[n_of_ip-1])
     ips.append(raw[i][n_of_ip])
     is_computer.append(int(raw[i][n_of_ip + 1]))
 
@@ -82,18 +83,24 @@ def fromiplisttoonlinecomputers():
     alive = 0
     dead = 0
     for i, ip in enumerate(ips):
-        os.system(ping_cmd.format(ip))
+        try:
 
-        with open("tmp.txt", "r") as f:
-            ret = f.read()
+            os.system(ping_cmd.format(ip))
 
-        if key_word in ret:
-            alive = alive + 1
-            specific.append(1)
-            print(f"[+] {ip}")
-        else:
-            specific.append(0)
-            print(f"[-] {ip}")
+            with open("tmp.txt", "r") as f:
+                ret = f.read()
+
+            pl = place[ips.index(ip)]
+            if key_word in ret:
+                alive = alive + 1
+                specific.append(1)
+                print(f"[+] {ip} - {pl}")
+            else:
+                specific.append(0)
+                print(f"[-] {ip} - {pl}")
+        except KeyboardInterrupt:
+            print("keyboard")
+            exit()
 
     return specific
 
