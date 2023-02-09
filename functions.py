@@ -89,7 +89,6 @@ def fromiplisttoonlinecomputers():
     dead = 0
     for i, ip in enumerate(ips):
         try:
-
             os.system(ping_cmd.format(ip))
 
             with open("tmp.txt", "r") as f:
@@ -111,7 +110,6 @@ def fromiplisttoonlinecomputers():
 
 
 def get_all():
-    print(is_computer)
     return is_computer.count(1), is_computer.count(0)
 
 
@@ -157,7 +155,6 @@ def save(power, p_pc, p_table, all_pc, all_table):
     # [n,"Dan","Ura","Moč","Prizgani_rac","Prizgane_table","Vsi_rac","Vse_table"]
     last = read_csv_file(file_out)
     last = last[-1][0]
-    print(last)
 
     try:
         last = int(last)
@@ -167,9 +164,8 @@ def save(power, p_pc, p_table, all_pc, all_table):
     last = last + 1
 
     dan = datetime.now().strftime("%d.%m.%Y")
-    hour = datetime.now().strftime("%S:%M:%H")
+    hour = datetime.now().strftime("%H:%M:%S")
     data = [last, dan, hour, power, p_pc, p_table, all_pc, all_table]
-    print(data)
     write_to_csv_file(file_out, data)
     function2.update(data)
 
@@ -188,10 +184,8 @@ def calculate_power(day):
     for i, v in enumerate(data):
         if v[1] == day:  # same day
             time1 = v[2]
-            print(time1)
             try:
                 time2 = data[i + 1][2]
-                print(time2)
             except IndexError:
                 time2 = v[2]
 
@@ -213,7 +207,7 @@ def calculate_power(day):
 # Todo
 def checkfordaily():
     dan = datetime.now().strftime("%d. %m. %Y")
-    time = datetime.now().strftime("%S:%M:%H")
+    time = datetime.now().strftime("%H:%M:%S")
 
     #! if (time == finish_time):
     if True:
