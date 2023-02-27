@@ -3,7 +3,7 @@ from flask_apscheduler import APScheduler
 import datetime
 import functions
 import json
-import function2
+#import function2
 
 app = Flask(__name__)
 
@@ -57,4 +57,4 @@ if __name__ == "__main__":
     scheduler = APScheduler()
     scheduler.add_job(func=update_n, trigger="interval", id="job", seconds=time_sleep)
     scheduler.start()
-    app.run(host=functions.ip(), port=80, debug=False)
+    app.run(host=functions.ip(), port=90, debug=False)

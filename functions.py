@@ -3,7 +3,7 @@ import os
 import csv
 import json
 import platform
-import function2
+#import function2
 
 mode = ""
 operating_system = platform.system()
@@ -61,6 +61,9 @@ for i in range(len(raw)):
     ips.append(raw[i][n_of_ip])
     is_computer.append(int(raw[i][n_of_ip + 1]))
 
+# Very IMP:
+is_computer.append(0)
+
 out = read_csv_file(file_out)
 daily = read_csv_file(file_out)
 
@@ -81,6 +84,22 @@ if out == []:
 
 if daily == []:
     write_to_csv_file(daily_path, ["Dan","Čas","Moč"])
+
+def get_table(specific_list):
+
+    with open("out.txt","r") as f:
+        d = f.read().splitlines()
+
+    last_ele = int(d[-1])
+
+    print(last_ele)
+
+    if last_ele > 5:
+        specific_list.append(1)
+    else:
+        specific_list.append(0)
+
+    return specific_list
 
 
 def fromiplisttoonlinecomputers():
@@ -104,8 +123,8 @@ def fromiplisttoonlinecomputers():
                 print(f"[-] {ip} - {pl}")
         except KeyboardInterrupt:
             print("keyboard")
-            exit()
 
+    specific = get_table(specific)
     return specific
 
 
@@ -116,9 +135,7 @@ def get_all():
 def get_power(specific_list):
     p = 0
 
-    if not len(specific_list) == len(ips):
-        print("[ERROR] List size does not match ip number. Exiting")
-        exit()
+
 
     for a, b in zip(specific_list, is_computer):
         if int(a) == 1:  # prizgan
@@ -167,7 +184,7 @@ def save(power, p_pc, p_table, all_pc, all_table):
     hour = datetime.now().strftime("%H:%M:%S")
     data = [last, dan, hour, power, p_pc, p_table, all_pc, all_table]
     write_to_csv_file(file_out, data)
-    function2.update(data)
+   # function2.update(data)
 
 
 def fromhour_to_seconds(t):
