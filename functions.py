@@ -3,7 +3,7 @@ import os
 import csv
 import json
 import platform
-#import function2
+import function2
 
 mode = ""
 operating_system = platform.system()
@@ -184,7 +184,7 @@ def save(power, p_pc, p_table, all_pc, all_table):
     hour = datetime.now().strftime("%H:%M:%S")
     data = [last, dan, hour, power, p_pc, p_table, all_pc, all_table]
     write_to_csv_file(file_out, data)
-   # function2.update(data)
+    function2.update(data)
 
 
 def fromhour_to_seconds(t):
