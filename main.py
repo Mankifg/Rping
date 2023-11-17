@@ -19,8 +19,7 @@ def update_n():
     prizgani_racunalniki, prizgane_table = functions.get_prizgane(specific_list)
 
     vsi_racunalniki, vse_table = functions.get_all()
-    print(vsi_racunalniki, vse_table)
-    r = f"{power}-{prizgani_racunalniki}-{prizgane_table}-{vsi_racunalniki}-{vse_table}"
+    r = f"{power}|{prizgani_racunalniki}|{prizgane_table}|{vsi_racunalniki}|{vse_table}"
     functions.save(
         power, prizgani_racunalniki, prizgane_table, vsi_racunalniki, vse_table
     )
@@ -35,7 +34,7 @@ def update_n():
 def main():
     with open("save.txt", "r") as f:
         data = f.read()
-    data = data.split("-")
+    data = data.split("|")
     p_pc = data[1]
     p_table = data[2]
     all_pc = data[3]
@@ -58,4 +57,4 @@ if __name__ == "__main__":
     scheduler = APScheduler()
     scheduler.add_job(func=update_n, trigger="interval", id="job", seconds=time_sleep)
     scheduler.start()
-    app.run(host=functions.ip(), port=80, debug=False)
+    app.run(host=functions.ip(), port=50, debug=False)

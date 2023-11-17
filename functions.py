@@ -38,6 +38,11 @@ ips = []
 is_computer = []
 place = []
 
+with open("./save.txt","w") as f:
+    f.write("-1|-1|-1|-1|-1")
+with open("./tmp.txt","w") as f:
+    pass
+
 def read_csv_file(fdir):
     with open(fdir, encoding="utf-8", newline="") as file:
         return list(csv.reader(file))
@@ -52,9 +57,12 @@ def write_to_csv_file(fdir, rows):
 raw = read_csv_file(file_name)
 
 for i in range(len(raw)):
-    place.append(raw[n_of_ip-1])
+    place.append(raw[i][n_of_ip-1])
     ips.append(raw[i][n_of_ip])
     is_computer.append(int(raw[i][n_of_ip + 1]))
+
+# Very IMP:
+is_computer.append(0)
 
 out = read_csv_file(file_out)
 daily = read_csv_file(file_out)
@@ -75,7 +83,23 @@ if out == []:
     )
 
 if daily == []:
-    write_to_csv_file(daily_path, ["Dan", "Moč"])
+    write_to_csv_file(daily_path, ["Dan","Čas","Moč"])
+
+def get_table(specific_list):
+
+    with open("out.txt","r") as f:
+        d = f.read().splitlines()
+
+    last_ele = int(d[-1])
+
+    print(last_ele)
+
+    if last_ele > 5:
+        specific_list.append(1)
+    else:
+        specific_list.append(0)
+
+    return specific_list
 
 
 def fromiplisttoonlinecomputers():
@@ -84,7 +108,6 @@ def fromiplisttoonlinecomputers():
     dead = 0
     for i, ip in enumerate(ips):
         try:
-
             os.system(ping_cmd.format(ip))
 
             with open("tmp.txt", "r") as f:
@@ -100,22 +123,19 @@ def fromiplisttoonlinecomputers():
                 print(f"[-] {ip} - {pl}")
         except KeyboardInterrupt:
             print("keyboard")
-            exit()
 
+    specific = get_table(specific)
     return specific
 
 
 def get_all():
-    print(is_computer)
     return is_computer.count(1), is_computer.count(0)
 
 
 def get_power(specific_list):
     p = 0
 
-    if not len(specific_list) == len(ips):
-        print("[ERROR] List size does not match ip number. Exiting")
-        exit()
+
 
     for a, b in zip(specific_list, is_computer):
         if int(a) == 1:  # prizgan
@@ -152,7 +172,6 @@ def save(power, p_pc, p_table, all_pc, all_table):
     # [n,"Dan","Ura","Moč","Prizgani_rac","Prizgane_table","Vsi_rac","Vse_table"]
     last = read_csv_file(file_out)
     last = last[-1][0]
-    print(last)
 
     try:
         last = int(last)
@@ -161,10 +180,9 @@ def save(power, p_pc, p_table, all_pc, all_table):
 
     last = last + 1
 
-    dan = datetime.now().strftime("%Y.%m.%d")
+    dan = datetime.now().strftime("%d.%m.%Y")
     hour = datetime.now().strftime("%H:%M:%S")
     data = [last, dan, hour, power, p_pc, p_table, all_pc, all_table]
-    print(data)
     write_to_csv_file(file_out, data)
     function2.update(data)
 
@@ -183,10 +201,8 @@ def calculate_power(day):
     for i, v in enumerate(data):
         if v[1] == day:  # same day
             time1 = v[2]
-            print(time1)
             try:
                 time2 = data[i + 1][2]
-                print(time2)
             except IndexError:
                 time2 = v[2]
 
@@ -207,11 +223,11 @@ def calculate_power(day):
 
 # Todo
 def checkfordaily():
-    time = datetime.now().strftime("%H:%M")
-    dan = datetime.now().strftime("%Y-%m-%d")
+    dan = datetime.now().strftime("%d. %m. %Y")
+    time = datetime.now().strftime("%H:%M:%S")
 
     #! if (time == finish_time):
     if True:
         pp = calculate_power(dan)
-        print(pp)
-        write_to_csv_file(daily_path, [dan, pp])
+        pp = round(pp,5)
+        write_to_csv_file(daily_path, [dan,time,pp])

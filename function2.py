@@ -29,26 +29,13 @@ def update(inp):
 
     last = read_csv_file(file_out)
     last = last[-1][0]
-    print(last)
 
     try:
         last = int(last)
     except ValueError:
         last = 0
-
-    last = last + 1
-
-    n = last - 2
-
-    if n < 1:
-        n = 1
-    while True:
-        v = sheet.acell(f"A{n}").value
-        if v == None:
-            print(n)
-            break
-        else:
-            n = n + 1
+        
+    n = last + 1
 
     sheet.update(f"A{n}:{alhabet[len(inp)]}{n}", [inp])
 
